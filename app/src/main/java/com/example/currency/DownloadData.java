@@ -25,7 +25,34 @@ public class DownloadData extends AsyncTask<String, Void, String> {
     String status;
     String strNow;
     String strEarlier;
+    String dolar;
+    String euro;
+    String gbpound;
+    String chf_string;
+    String cad_string;
+    String nok_string;
+    String currentDynamicKey;
+    float eur;
+    float reciprocal_euro;
+    float usd;
+    float reciprocal_usd;
+    float gbp;
+    float reciprocal_gbp;
+    float chf;
+    float reciprocal_chf;
+    float cad;
+    float reciprocal_cad;
+    float nok;
+    float reciprocal_nok;
     ArrayList<String> dateList = new ArrayList<>();
+    ArrayList<Float> usdList = new ArrayList<>();
+    ArrayList<Float> euroList = new ArrayList<>();
+    ArrayList<Float> gbpList = new ArrayList<>();
+    ArrayList<Float> chfList = new ArrayList<>();
+    ArrayList<Float> cadList = new ArrayList<>();
+    ArrayList<Float> nokList = new ArrayList<>();
+
+    JSONObject currentDynamicValue;
 
     public DownloadData (WebServiceListener delegate, String status){
         this.delegate=delegate;
@@ -80,24 +107,24 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     //System.out.println("rates"+rates);
 
                     JSONObject jsonObject1 = new JSONObject(rates);
-                    String euro = jsonObject1.getString("EUR");
-                    String dolar = jsonObject1.getString("USD");
-                    String gbpound = jsonObject1.getString("GBP");
-                    String chf_string = jsonObject1.getString("CHF");
-                    String cad_string = jsonObject1.getString("CAD");
-                    String nok_string = jsonObject1.getString("NOK");
-                    float eur = Float.valueOf(euro);
-                    float reciprocal_euro = 1 / eur;
-                    float usd = Float.valueOf(dolar);
-                    float reciprocal_usd = 1 / usd;
-                    float gbp = Float.valueOf(gbpound);
-                    float reciprocal_gbp = 1 / gbp;
-                    float chf = Float.valueOf(chf_string);
-                    float reciprocal_chf = 1/ chf;
-                    float cad = Float.valueOf(cad_string);
-                    float reciprocal_cad = 1 / cad;
-                    float nok = Float.valueOf(nok_string);
-                    float reciprocal_nok = 1 / nok;
+                    euro = jsonObject1.getString("EUR");
+                    dolar = jsonObject1.getString("USD");
+                    gbpound = jsonObject1.getString("GBP");
+                    chf_string = jsonObject1.getString("CHF");
+                    cad_string = jsonObject1.getString("CAD");
+                    nok_string = jsonObject1.getString("NOK");
+                    eur = Float.valueOf(euro);
+                    reciprocal_euro = 1 / eur;
+                    usd = Float.valueOf(dolar);
+                    reciprocal_usd = 1 / usd;
+                    gbp = Float.valueOf(gbpound);
+                    reciprocal_gbp = 1 / gbp;
+                    chf = Float.valueOf(chf_string);
+                    reciprocal_chf = 1/ chf;
+                    cad = Float.valueOf(cad_string);
+                    reciprocal_cad = 1 / cad;
+                    nok = Float.valueOf(nok_string);
+                    reciprocal_nok = 1 / nok;
                     //System.out.println("1 EUR = "+ reciprocal_euro + " TRY");
                     //System.out.println("1 USD = "+ reciprocal_usd + " TRY");
                     //System.out.println("1 GBP = "+ reciprocal_gbp + " TRY");
@@ -105,7 +132,7 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     try {
                         Date now = new SimpleDateFormat("yyyy-MM-dd").parse(date);
                         Date earlier = new Date();
-                        earlier.setDate(now.getDate() - 6);
+                        earlier.setDate(now.getDate() - 27);
                         strNow = new SimpleDateFormat("yyyy-MM-dd").format(now);
                         strEarlier = new SimpleDateFormat("yyyy-MM-dd").format(earlier);
                         //System.out.println(strNow);
@@ -131,7 +158,7 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     Iterator keys = dates.keys();
 
                     while (keys.hasNext()) {
-                        String currentDynamicKey = (String) keys.next();
+                        currentDynamicKey = (String) keys.next();
                         //System.out.println(currentDynamicKey);
                         dateList.add(currentDynamicKey);
                         Collections.sort(dateList);
@@ -139,14 +166,34 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     }
                     for (int i = 0; i < dateList.size(); i++) {
                         //System.out.println(dateList.get(i));
-                        JSONObject currentDynamicValue = dates.getJSONObject(dateList.get(i));
-                        String euro = currentDynamicValue.getString("EUR");
-                        String dolar = currentDynamicValue.getString("USD");
-                        String gbpound = currentDynamicValue.getString("GBP");
-                        float eur = Float.valueOf(euro);
-                        float reciprocal_euro = 1 / eur;
-                        System.out.println("1 EUR = "+ reciprocal_euro + " TRY");
+                        currentDynamicValue = dates.getJSONObject(dateList.get(i));
+                        dolar = currentDynamicValue.getString("USD");
+                        euro = currentDynamicValue.getString("EUR");
+                        gbpound = currentDynamicValue.getString("GBP");
+                        chf_string = currentDynamicValue.getString("CHF");
+                        cad_string = currentDynamicValue.getString("CAD");
+                        nok_string = currentDynamicValue.getString("NOK");
+                        usd = Float.valueOf(dolar);
+                        reciprocal_usd = 1 / usd;
+                        usdList.add(reciprocal_usd);
+                        eur = Float.valueOf(euro);
+                        reciprocal_euro = 1 / eur;
+                        euroList.add(reciprocal_euro);
+                        gbp = Float.valueOf(gbpound);
+                        reciprocal_gbp = 1 / gbp;
+                        gbpList.add(reciprocal_gbp);
+                        chf = Float.valueOf(chf_string);
+                        reciprocal_chf = 1 / chf;
+                        chfList.add(reciprocal_chf);
+                        cad = Float.valueOf(cad_string);
+                        reciprocal_cad = 1 / cad;
+                        cadList.add(reciprocal_cad);
+                        nok = Float.valueOf(nok_string);
+                        reciprocal_nok = 1 / nok;
+                        nokList.add(reciprocal_nok);
                     }
+
+                    delegate.OnDetailTaskCompleted(dateList,usdList,euroList,gbpList,chfList,cadList,nokList);
                 } catch (Exception e) {
                 }
                 break;

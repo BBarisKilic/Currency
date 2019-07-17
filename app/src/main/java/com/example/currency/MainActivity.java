@@ -13,16 +13,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements WebServiceListener
 {
-
-    String date;
     String status;
-    String strNow;
-    String strEarlier;
-    ArrayList<String> euro = new ArrayList<>();
-    ArrayList<String> dolar = new ArrayList<>();
-    ArrayList<String> pound = new ArrayList<>();
-
-
     ArrayList<Currency> currencyArrayList = new ArrayList<>();
     private ListView listView;
     private CurrencyAdapter currencyAdapter;
@@ -69,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
         currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",usd));
         currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", euro));
         currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",gbp));
-        currencyArrayList.add(new Currency(R.drawable.ch,"CHF", "isviçre Frangı",chf));
+        currencyArrayList.add(new Currency(R.drawable.ch,"CHF", "İsviçre Frangı",chf));
         currencyArrayList.add(new Currency(R.drawable.canada,"CAD", "Kanada Doları",cad));
         currencyArrayList.add(new Currency(R.drawable.norway,"NOK", "Norveç Kronu",nok));
 
@@ -87,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void OnDetailTaskCompleted(ArrayList<String> datelist, ArrayList<Float> usdList, ArrayList<Float> euroList,
+                                      ArrayList<Float> gbpList, ArrayList<Float> chfList, ArrayList<Float> cadList, ArrayList<Float> nokList) {
+
     }
 }
 
