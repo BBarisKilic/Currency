@@ -104,7 +104,7 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     } catch (ParseException e){
                     }
 
-                    delegate.OnTaskCompleted(strNow,strEarlier);
+                    delegate.OnTaskCompleted(reciprocal_usd,reciprocal_euro,reciprocal_gbp,strNow,strEarlier);
 
                 } catch (Exception e) {
                 }

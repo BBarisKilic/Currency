@@ -37,6 +37,8 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
         TextView longName = (TextView) listItem.findViewById(R.id.textView_long_name);
         longName.setText(currentCurrency.getLongName());
 
+        TextView currency = (TextView) listItem.findViewById(R.id.textView_currency);
+        currency.setText(String.valueOf(currentCurrency.getCurrency())+" TRY");
         return listItem;
     }
 }

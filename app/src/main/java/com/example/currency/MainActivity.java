@@ -2,32 +2,14 @@ package com.example.currency;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.net.http.HttpResponseCache;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity implements WebServiceListener
 {
@@ -50,10 +32,12 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTitle("Güncel Kurlar");
+
         listView= (ListView) findViewById(R.id.listView);
-        currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları"));
-        currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi"));
-        currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini"));
+        currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",0));
+        currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", 0));
+        currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",0));
 
         currencyAdapter = new CurrencyAdapter(this,currencyArrayList);
         listView.setAdapter(currencyAdapter);
@@ -76,7 +60,16 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
 
 
     @Override
-    public void OnTaskCompleted(final String strNow, final String strEarlier) {
+    public void OnTaskCompleted(float usd, float euro, float gbp,final String strNow, final String strEarlier) {
+
+        currencyArrayList.clear();
+        currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",usd));
+        currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", euro));
+        currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",gbp));
+
+        currencyAdapter = new CurrencyAdapter(this,currencyArrayList);
+        listView.setAdapter(currencyAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)  {

@@ -40,7 +40,5 @@ public class DetailActivity extends AppCompatActivity{
             downloadBigData.execute(newUrl);
         } catch (Exception e){
         }
-
     }
-
 }

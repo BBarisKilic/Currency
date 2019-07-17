@@ -4,11 +4,13 @@ public class Currency {
     private int image;
     private String shortName;
     private String longName;
+    private float currency;
 
-    public Currency(int image, String shortName, String longName){
+    public Currency(int image, String shortName, String longName,float currency){
         this.image = image;
         this.shortName = shortName;
         this.longName = longName;
+        this.currency = currency;
     }
 
 
@@ -34,5 +36,13 @@ public class Currency {
 
     public void setLongName(String longName) {
         this.longName = longName;
+    }
+
+    public float getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(float currency) {
+        this.currency = currency;
     }
 }
