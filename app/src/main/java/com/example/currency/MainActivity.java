@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
         currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",0));
         currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", 0));
         currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",0));
+        currencyArrayList.add(new Currency(R.drawable.ch,"CHF", "isviçre Frangı",0));
+        currencyArrayList.add(new Currency(R.drawable.canada,"CAD", "Kanada Doları",0));
+        currencyArrayList.add(new Currency(R.drawable.norway,"NOK", "Norveç Kronu",0));
 
         currencyAdapter = new CurrencyAdapter(this,currencyArrayList);
         listView.setAdapter(currencyAdapter);
@@ -60,12 +63,15 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
 
 
     @Override
-    public void OnTaskCompleted(float usd, float euro, float gbp,final String strNow, final String strEarlier) {
+    public void OnTaskCompleted(float usd, float euro, float gbp, float chf, float cad, float nok, final String strNow, final String strEarlier) {
 
         currencyArrayList.clear();
         currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",usd));
         currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", euro));
         currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",gbp));
+        currencyArrayList.add(new Currency(R.drawable.ch,"CHF", "isviçre Frangı",chf));
+        currencyArrayList.add(new Currency(R.drawable.canada,"CAD", "Kanada Doları",cad));
+        currencyArrayList.add(new Currency(R.drawable.norway,"NOK", "Norveç Kronu",nok));
 
         currencyAdapter = new CurrencyAdapter(this,currencyArrayList);
         listView.setAdapter(currencyAdapter);

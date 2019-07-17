@@ -83,12 +83,21 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     String euro = jsonObject1.getString("EUR");
                     String dolar = jsonObject1.getString("USD");
                     String gbpound = jsonObject1.getString("GBP");
+                    String chf_string = jsonObject1.getString("CHF");
+                    String cad_string = jsonObject1.getString("CAD");
+                    String nok_string = jsonObject1.getString("NOK");
                     float eur = Float.valueOf(euro);
                     float reciprocal_euro = 1 / eur;
                     float usd = Float.valueOf(dolar);
                     float reciprocal_usd = 1 / usd;
                     float gbp = Float.valueOf(gbpound);
                     float reciprocal_gbp = 1 / gbp;
+                    float chf = Float.valueOf(chf_string);
+                    float reciprocal_chf = 1/ chf;
+                    float cad = Float.valueOf(cad_string);
+                    float reciprocal_cad = 1 / cad;
+                    float nok = Float.valueOf(nok_string);
+                    float reciprocal_nok = 1 / nok;
                     //System.out.println("1 EUR = "+ reciprocal_euro + " TRY");
                     //System.out.println("1 USD = "+ reciprocal_usd + " TRY");
                     //System.out.println("1 GBP = "+ reciprocal_gbp + " TRY");
@@ -104,7 +113,7 @@ public class DownloadData extends AsyncTask<String, Void, String> {
                     } catch (ParseException e){
                     }
 
-                    delegate.OnTaskCompleted(reciprocal_usd,reciprocal_euro,reciprocal_gbp,strNow,strEarlier);
+                    delegate.OnTaskCompleted(reciprocal_usd,reciprocal_euro,reciprocal_gbp,reciprocal_chf, reciprocal_cad, reciprocal_nok, strNow,strEarlier);
 
                 } catch (Exception e) {
                 }
