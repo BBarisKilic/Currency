@@ -18,13 +18,13 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class DownloadData extends AsyncTask<String, Void, String> {
 
-    public WebServiceListener delegate = null;
+    private WebServiceListener delegate = null;
 
     String date;
-    String currency;
-    String status;
-    String strNow;
-    String strEarlier;
+    private String currency;
+    private String status;
+    private String strNow;
+    private  String strEarlier;
     String dolar;
     String euro;
     String gbpound;
@@ -32,7 +32,7 @@ public class DownloadData extends AsyncTask<String, Void, String> {
     String cad_string;
     String nok_string;
     String currentDynamicKey;
-    float eur;
+    private float eur;
     float reciprocal_euro;
     float usd;
     float reciprocal_usd;
@@ -44,13 +44,13 @@ public class DownloadData extends AsyncTask<String, Void, String> {
     float reciprocal_cad;
     float nok;
     float reciprocal_nok;
-    ArrayList<String> dateList = new ArrayList<>();
-    ArrayList<Float> usdList = new ArrayList<>();
-    ArrayList<Float> euroList = new ArrayList<>();
-    ArrayList<Float> gbpList = new ArrayList<>();
-    ArrayList<Float> chfList = new ArrayList<>();
-    ArrayList<Float> cadList = new ArrayList<>();
-    ArrayList<Float> nokList = new ArrayList<>();
+    private ArrayList<String> dateList = new ArrayList<>();
+    private ArrayList<Float> usdList = new ArrayList<>();
+    private ArrayList<Float> euroList = new ArrayList<>();
+    private ArrayList<Float> gbpList = new ArrayList<>();
+    private ArrayList<Float> chfList = new ArrayList<>();
+    private ArrayList<Float> cadList = new ArrayList<>();
+    private ArrayList<Float> nokList = new ArrayList<>();
 
     JSONObject currentDynamicValue;
 
@@ -58,12 +58,6 @@ public class DownloadData extends AsyncTask<String, Void, String> {
         this.delegate=delegate;
         this.status=status;
     }
-
-    public DownloadData (String status,String currency){
-        this.status=status;
-        this.currency=currency;
-    }
-
 
     @Override
     protected String doInBackground(String... strings) {

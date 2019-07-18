@@ -1,27 +1,26 @@
 package com.example.currency;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Switch;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements WebServiceListener{
 
     HorizontalBarChart horizontalBarChart;
-    String currency;
+    String currency_short;
+    String currency_long;
     String strEarlier;
     String strNow;
 
@@ -29,22 +28,26 @@ public class DetailActivity extends AppCompatActivity implements WebServiceListe
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent = getIntent();
 
-        currency = intent.getStringExtra("currency");
+        currency_short = intent.getStringExtra("currency_short");
+        currency_long = intent.getStringExtra("currency_long");
         strEarlier = intent.getStringExtra("strEarlier");
         strNow= intent.getStringExtra("strNow");
         //System.out.println(strEarlier);
         //System.out.println(strNow);
 
-        setTitle(currency+" Analizi");
-        //textView.setText(currency);
+        setTitle(currency_long +" Analizi");
+        //textView.setText(currency_short);
 
         horizontalBarChart = (HorizontalBarChart) findViewById(R.id.chartBar);
-        horizontalBarChart.getDescription().setText(currency+"/TRY Paritesi");
+        horizontalBarChart.getDescription().setText(currency_short +"/TRY Grafiği");
         horizontalBarChart.setNoDataText("Veriler indirilirken lütfen bekleyin!");
+        horizontalBarChart.setNoDataTextColor(Color.parseColor("#f76262"));
         horizontalBarChart.setTouchEnabled(false);
+        horizontalBarChart.setExtraBottomOffset(6f);
 
 
 
@@ -85,24 +88,87 @@ public class DetailActivity extends AppCompatActivity implements WebServiceListe
         final XAxis xAxis = horizontalBarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(datelist));
         xAxis.setLabelCount(datelist.size()+1);
-        xAxis.setLabelRotationAngle(15f);
 
-
-        if ("USD".equals(currency)) {
+        if ("USD".equals(currency_short)) {
             yVals.clear();
             for (int i = 0; i < datelist.size(); i++) {
                 yVals.add(new BarEntry(i * spaceForBar, usdList.get(i)));
             }
-            barDataSet = new BarDataSet(yVals, "Son 1 aylık iş günü kur oranları");
-            barDataSet.setColor(Color.RED);
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
             barData = new BarData(barDataSet);
             barData.setBarWidth(barWidth);
             //horizontalBarChart.setFitBars(true);
             //horizontalBarChart.getData().setValueTextSize(16);
             horizontalBarChart.setData(barData);
             horizontalBarChart.invalidate();
+        } else if ("EURO".equals(currency_short)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, euroList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        } else if ("GBP".equals(currency_short)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, gbpList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        } else if ("CHF".equals(currency_short)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, chfList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        } else if ("CAD".equals(currency_short)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, cadList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        } else if ("NOK".equals(currency_short)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, nokList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, currency_short +"/TRY Paritesi");
+            barDataSet.setColor(Color.parseColor("#f76262"));
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        } else {
+            horizontalBarChart.setNoDataText("Houston, we have a problem!");
         }
-
-
     }
 }

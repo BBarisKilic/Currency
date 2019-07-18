@@ -1,6 +1,7 @@
 package com.example.currency;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,19 +23,20 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        setTitle("Güncel Kurlar");
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         listView= (ListView) findViewById(R.id.listView);
-        currencyArrayList.add(new Currency(R.drawable.us,"USD", "Amerikan Doları",0));
-        currencyArrayList.add(new Currency(R.drawable.eu,"EURO", "Avrupa Para Birimi", 0));
-        currencyArrayList.add(new Currency(R.drawable.uk,"GBP", "İngiliz Sterlini",0));
-        currencyArrayList.add(new Currency(R.drawable.ch,"CHF", "isviçre Frangı",0));
-        currencyArrayList.add(new Currency(R.drawable.canada,"CAD", "Kanada Doları",0));
-        currencyArrayList.add(new Currency(R.drawable.norway,"NOK", "Norveç Kronu",0));
+        if(currencyArrayList.size()==0) {
+            currencyArrayList.add(new Currency(R.drawable.us, "USD", "Amerikan Doları", 0));
+            currencyArrayList.add(new Currency(R.drawable.eu, "EURO", "Avrupa Para Birimi", 0));
+            currencyArrayList.add(new Currency(R.drawable.uk, "GBP", "İngiliz Sterlini", 0));
+            currencyArrayList.add(new Currency(R.drawable.ch, "CHF", "isviçre Frangı", 0));
+            currencyArrayList.add(new Currency(R.drawable.canada, "CAD", "Kanada Doları", 0));
+            currencyArrayList.add(new Currency(R.drawable.norway, "NOK", "Norveç Kronu", 0));
 
-        currencyAdapter = new CurrencyAdapter(this,currencyArrayList);
-        listView.setAdapter(currencyAdapter);
+            currencyAdapter = new CurrencyAdapter(this, currencyArrayList);
+            listView.setAdapter(currencyAdapter);
+        }
 
         try{
             Uri.Builder builder = new Uri.Builder();
@@ -73,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
 
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.putExtra("currency", currencyArrayList.get(position).getShortName());
+                intent.putExtra("currency_short", currencyArrayList.get(position).getShortName());
+                intent.putExtra("currency_long", currencyArrayList.get(position).getLongName());
                 intent.putExtra("strNow", strNow);
                 intent.putExtra("strEarlier", strEarlier);
                 startActivity(intent);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
     }
 
     @Override
-    public void OnDetailTaskCompleted(ArrayList<String> datelist, ArrayList<Float> usdList, ArrayList<Float> euroList,
+    public void OnDetailTaskCompleted(ArrayList<String> dateList, ArrayList<Float> usdList, ArrayList<Float> euroList,
                                       ArrayList<Float> gbpList, ArrayList<Float> chfList, ArrayList<Float> cadList, ArrayList<Float> nokList) {
 
     }
