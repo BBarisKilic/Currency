@@ -1,6 +1,7 @@
 package com.example.currency;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -28,8 +30,6 @@ public class DetailActivity extends AppCompatActivity implements WebServiceListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
 
-        horizontalBarChart = (HorizontalBarChart) findViewById(R.id.chartBar);
-
         Intent intent = getIntent();
 
         currency = intent.getStringExtra("currency");
@@ -40,6 +40,13 @@ public class DetailActivity extends AppCompatActivity implements WebServiceListe
 
         setTitle(currency+" Analizi");
         //textView.setText(currency);
+
+        horizontalBarChart = (HorizontalBarChart) findViewById(R.id.chartBar);
+        horizontalBarChart.getDescription().setText(currency+"/TRY Paritesi");
+        horizontalBarChart.setNoDataText("Veriler indirilirken lütfen bekleyin!");
+        horizontalBarChart.setTouchEnabled(false);
+
+
 
         try{
             Uri.Builder newBuilder = new Uri.Builder();
@@ -69,32 +76,33 @@ public class DetailActivity extends AppCompatActivity implements WebServiceListe
         //System.out.println(datelist);
         //System.out.println(usdList);
 
-        switch (currency){
-        }
-
-
-
-
-
-        
         ArrayList<BarEntry> yVals = new ArrayList<>();
-        float barWidth = 1f;
+        float barWidth = 0.5f;
         float spaceForBar = 1f;
-
-        for(int i=0;i<datelist.size();i++){
-            yVals.add(new BarEntry(i*spaceForBar,nokList.get(i)));
-        }
-
         BarDataSet barDataSet;
-
-        barDataSet = new BarDataSet(yVals, "Data Set Deneme");
-
-        BarData barData = new BarData(barDataSet);
-        barData.setBarWidth(barWidth);
+        BarData barData;
 
         final XAxis xAxis = horizontalBarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(datelist));
+        xAxis.setLabelCount(datelist.size()+1);
+        xAxis.setLabelRotationAngle(15f);
 
-        horizontalBarChart.setData(barData);
+
+        if ("USD".equals(currency)) {
+            yVals.clear();
+            for (int i = 0; i < datelist.size(); i++) {
+                yVals.add(new BarEntry(i * spaceForBar, usdList.get(i)));
+            }
+            barDataSet = new BarDataSet(yVals, "Son 1 aylık iş günü kur oranları");
+            barDataSet.setColor(Color.RED);
+            barData = new BarData(barDataSet);
+            barData.setBarWidth(barWidth);
+            //horizontalBarChart.setFitBars(true);
+            //horizontalBarChart.getData().setValueTextSize(16);
+            horizontalBarChart.setData(barData);
+            horizontalBarChart.invalidate();
+        }
+
+
     }
 }

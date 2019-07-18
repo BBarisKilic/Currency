@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements WebServiceListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)  {
 
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("currency", currencyArrayList.get(position).getLongName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("currency", currencyArrayList.get(position).getShortName());
                 intent.putExtra("strNow", strNow);
                 intent.putExtra("strEarlier", strEarlier);
                 startActivity(intent);
